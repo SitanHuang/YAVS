@@ -2,7 +2,11 @@ require 'archive/zip'
 require 'optparse'
 require 'fileutils'
 
-$YAVS_VERSION = 'v0.02.Bamend'
+require_relative '../lib/init'
+require_relative '../lib/status'
+require_relative '../lib/log'
+
+$YAVS_VERSION = 'v0.06A'
 
 module YAVS
   def self.exist?

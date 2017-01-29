@@ -29,13 +29,27 @@ module YAVS
     extract_previous_files
     content = YAVS::Diff.diff '.yavs/temp/extract', ".yavs/repo/#{version}"
     File.write ".yavs/repo/#{version}diff", content
+    delete_extract
+  end
+
+  def self.delete_extract
     FileUtils.rm_rf '.yavs/temp/extract/.'
   end
 
   def self.extract_previous_files
+    lver = last_version
+    return -1 if lver == nil
+    extract_version lver
+  end
+
+  def self.extract_version version
+    Archive::Zip.extract ".yavs/repo/#{version}comp", '.yavs/temp/extract'
+  end
+
+  def self.last_version
     lver = File.read('.yavs/repo/versions').split("\n").last
     return -1 if lver == nil
-    Archive::Zip.extract ".yavs/repo/#{lver}comp", '.yavs/temp/extract'
+    return lver
   end
 
   def self.write_versions version

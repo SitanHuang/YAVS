@@ -6,16 +6,14 @@ module YAVS
       content = ""
       add = add?(old, new).each do |file|
         content << "+ #{file}" << "\n"
-        log "+ #{file}".green
       end
       delete?(old, new).each do |file|
         content << "- #{file}" << "\n"
-        log "- #{file}".red
       end
       (modify?(old, new) - add).each do |file|
         content << "@ #{file}" << "\n"
-        log "@ #{file}".yellow
       end
+      log colorize content
       return content
     end
 
@@ -47,6 +45,19 @@ module YAVS
         delete << relative unless File.exist? "#{new}/#{relative}"
       end
       return delete
+    end
+
+    def self.colorize content
+      content.split("\n").each do |line|
+        case line[0]
+          when '+'
+            log line.green
+          when '-'
+            log line.red
+          when '@'
+            log line.yellow
+        end
+      end
     end
   end
 end

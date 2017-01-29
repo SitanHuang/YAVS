@@ -15,7 +15,6 @@ $YAVS_PWD = Pathname.new(FileUtils.pwd).realpath
 $YAVS_DOT_PWD = "#{$YAVS_PWD}/.yavs"
 
 require_relative '../lib/yavs'
-require_relative '../lib/init'
 
 raise 'Repo locked! check .yavs/temp/lock' if YAVS.lock?
 
@@ -39,6 +38,17 @@ case ARGV.shift
     exit
   when 'version'
     puts File.read('.yavs/repo/versions')
+    exit
+  when 'status'
+    YAVS::Status.status
+    exit
+  when 'log'
+    version = ARGV.shift
+    if version != nil
+      YAVS::Log.log_version version
+    else
+      YAVS::Log.log_all
+    end
     exit
   else
     raise 'Unknown command!'
