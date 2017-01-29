@@ -13,7 +13,7 @@ module YAVS
       (modify?(old, new) - add).each do |file|
         content << "@ #{file}" << "\n"
       end
-      log colorize content
+      colorize content
       return content
     end
 
