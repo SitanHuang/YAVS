@@ -20,6 +20,12 @@ yavs push <version>
 yavs log
 yavs log <version>
 yavs status
+yavs extract
+yavs extract <version>
+
+# edit ignored files (similar to .gitignore, supporting wildcards)
+# ignored files support wildcards like **/.*
+vim .yavs/ignored
 
 # TODOs
 yavs ammend

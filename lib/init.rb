@@ -12,6 +12,7 @@ module YAVS
     lock
     FileUtils.mkdir_p '.yavs/repo'
     File.write '.yavs/repo/versions', ''
+    File.write '.yavs/ignored', ''
 
     push 'initial'
   end

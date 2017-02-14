@@ -6,11 +6,11 @@ require_relative '../lib/init'
 require_relative '../lib/status'
 require_relative '../lib/log'
 
-$YAVS_VERSION = 'v0.06B'
+$YAVS_VERSION = 'v0.11.B'
 
 module YAVS
   def self.exist?
-    File.directory? $YAVS_DOT_PWD
+    File.directory? '.yavs'
   end
 
   def self.lock

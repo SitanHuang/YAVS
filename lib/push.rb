@@ -21,6 +21,9 @@ module YAVS
     Dir.glob './*' do |file|
       next if file == '.yavs'
       FileUtils.cp_r file, ".yavs/repo/#{version}"
+      YAVS::Ignore.list_ignored(".yavs/repo/#{version}/").each do |file|
+        FileUtils.rm_rf file
+      end
     end
     Archive::Zip.archive ".yavs/repo/#{version}comp", ".yavs/repo/#{version}/."
   end

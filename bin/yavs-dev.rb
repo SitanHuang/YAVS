@@ -4,6 +4,18 @@ require 'pathname'
 require 'fileutils'
 require 'colorize'
 
+puts "\
+========================
+WARNING!
+This version is pre-alpha and
+should not seek stability.
+
+I appreciate for bug reports
+to 978494543.qq54@gmail.com. Thx.
+========================
+
+"
+
 def log m
   puts m
 end
@@ -42,6 +54,13 @@ case ARGV.shift
   when 'status'
     YAVS::Status.status
     exit
+  when 'extract'
+    version = ARGV.shift
+    version = YAVS.last_version if version == nil
+    puts "Extracting `#{version}` to .yavs/temp/extract"
+    YAVS.delete_extract
+    YAVS.extract_version version
+    exit
   when 'log'
     version = ARGV.shift
     if version != nil
@@ -51,6 +70,8 @@ case ARGV.shift
     end
     exit
   else
-    raise 'Unknown command!'
+    puts "\
+    yavs (init | push | version | status | extract | log | --version) [version]
+    "
     exit
 end

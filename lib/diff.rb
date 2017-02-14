@@ -1,4 +1,5 @@
 require 'colorize'
+require_relative 'ignore'
 
 module YAVS
   module Diff
@@ -7,10 +8,10 @@ module YAVS
       add = add?(old, new).each do |file|
         content << "+ #{file}" << "\n"
       end
-      delete?(old, new).each do |file|
+      delete = delete?(old, new).each do |file|
         content << "- #{file}" << "\n"
       end
-      (modify?(old, new) - add).each do |file|
+      (modify?(old, new) - add - delete).each do |file|
         content << "@ #{file}" << "\n"
       end
       colorize content
@@ -22,7 +23,7 @@ module YAVS
     # modify -> compare new to old
     def self.modify? old, new
       modify = []
-      Dir.glob "#{new}/**/*" do |file|
+      (Dir.glob("#{new}/**/*") - YAVS::Ignore.list_ignored).each do |file|
         relative = file.sub "#{new}/", ''
         modify << relative if File.size?("#{old}/#{relative}") != File.size?(file)
       end
@@ -31,7 +32,7 @@ module YAVS
 
     def self.add? old, new
       add = []
-      Dir.glob "#{new}/**/*" do |file|
+      (Dir.glob("#{new}/**/*") - YAVS::Ignore.list_ignored).each do |file|
         relative = file.sub "#{new}/", ''
         add << relative unless File.exist? "#{old}/#{relative}"
       end
@@ -42,6 +43,13 @@ module YAVS
       delete = []
       Dir.glob "#{old}/**/*" do |file|
         relative = file.sub "#{old}/", ''
+        if File.exist? "#{new}/#{relative}"
+          if YAVS::Ignore.list_ignored.include? relative
+            delete << relative
+          end
+        else
+          delete << relative
+        end
         delete << relative unless File.exist? "#{new}/#{relative}"
       end
       return delete
