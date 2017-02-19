@@ -41,7 +41,7 @@ module YAVS
 
   def self.extract_previous_files
     lver = last_version
-    return -1 if lver == nil
+    return -1 if lver == -1
     extract_version lver
   end
 

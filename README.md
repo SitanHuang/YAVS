@@ -22,6 +22,7 @@ yavs log <version>
 yavs status
 yavs extract
 yavs extract <version>
+yavs sync <host> <user> <passwd> <remote filepath>
 
 # edit ignored files (similar to .gitignore, supporting wildcards)
 # ignored files support wildcards like **/.*

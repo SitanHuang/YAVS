@@ -50,7 +50,6 @@ module YAVS
         else
           delete << relative
         end
-        delete << relative unless File.exist? "#{new}/#{relative}"
       end
       return delete
     end

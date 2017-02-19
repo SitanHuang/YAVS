@@ -5,8 +5,9 @@ require 'fileutils'
 require_relative '../lib/init'
 require_relative '../lib/status'
 require_relative '../lib/log'
+require_relative '../lib/sync_ftp'
 
-$YAVS_VERSION = 'v0.11.B'
+$YAVS_VERSION = 'v0.20'
 
 module YAVS
   def self.exist?

@@ -69,9 +69,18 @@ case ARGV.shift
       YAVS::Log.log_all
     end
     exit
+  when 'sync'
+    host = ARGV.shift
+    user = ARGV.shift
+    passwd = ARGV.shift
+    path = ARGV.shift
+    YAVS::Sync.sync_ftp host, user, passwd, path
+    exit
   else
     puts "\
-    yavs (init | push | version | status | extract | log | --version) [version]
+    yavs (init | push | version | status | extract | log | --version | sync)
+    yavs (status | log | push) [version]
+    yavs sync host user passwd filepath
     "
     exit
 end
